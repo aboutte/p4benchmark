@@ -383,3 +383,39 @@ variable "prevent_deletion_if_contains_resources" {
   type        = bool
   default     = false
 }
+
+variable "changeset_resource_group_name" {
+  description = "Name of the Azure resource group where the changeset storage account is located"
+  type        = string
+  default     = ""
+}
+
+variable "changeset_storage_account_name" {
+  description = "Name of the Azure storage account where the changeset file share is located"
+  type        = string
+  default     = ""
+}
+
+variable "changeset_storage_account_key" {
+  description = "Key of the Azure storage account where the changeset file share is located"
+  type        = string
+  default     = ""
+}
+
+variable "changeset_file_share_name" {
+  description = "Name of the Azure file share where the changeset is located"
+  type        = string
+  default     = ""
+}
+
+variable "changeset_file_share_folder_name" {
+  description = "Name of the Azure file share folder where the changeset is located"
+  type        = string
+  default     = ""
+}
+
+variable "changeset_destination_path" {
+  description = "Destination path in client VMs for the changeset extracted files"
+  type        = string
+  default     = "/tmp/changeset"
+}

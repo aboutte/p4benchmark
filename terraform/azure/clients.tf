@@ -3,7 +3,7 @@ locals {
 
   client_subnet_id = var.existing_vnet ? data.azurerm_subnet.existing_public_subnet[0].id : azurerm_subnet.vm_p4_subnet[0].id
 
-  client_user_data = base64encode(templatefile("${path.module}/../scripts/client_userdata.sh", {
+  client_user_data = base64encode(templatefile("${path.module}/../scripts/client_userdata_azure.sh", {
     environment         = var.environment
     ssh_public_key      = tls_private_key.ssh-key.public_key_openssh
     ssh_private_key     = tls_private_key.ssh-key.private_key_openssh
@@ -20,6 +20,13 @@ locals {
 
     p4benchmark_dir      = var.p4benchmark_dir
     locust_workspace_dir = var.locust_workspace_dir
+
+    changeset_resource_group_name    = var.changeset_resource_group_name
+    changeset_storage_account_name   = var.changeset_storage_account_name
+    changeset_storage_account_key    = var.changeset_storage_account_key
+    changeset_file_share_name        = var.changeset_file_share_name
+    changeset_file_share_folder_name = var.changeset_file_share_folder_name
+    changeset_destination_path       = var.changeset_destination_path
 
   }))
 }
@@ -62,6 +69,11 @@ resource "azurerm_linux_virtual_machine" "locustclients" {
     publisher = "perforce"
     product   = "rockylinux8"
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = local.tags
 }
 

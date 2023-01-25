@@ -23,3 +23,14 @@ resource "azurerm_role_assignment" "aks_role" {
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = azurerm_linux_virtual_machine.driver.identity[0].principal_id
 }
+
+data "azurerm_subscription" "subscription_data" {
+}
+
+resource "azurerm_role_assignment" "subscription_read_role_client_vms" {
+  count = length(azurerm_linux_virtual_machine.locustclients)
+
+  scope                = data.azurerm_subscription.subscription_data.id
+  role_definition_name = "Reader"
+  principal_id         = azurerm_linux_virtual_machine.locustclients[count.index].identity[0].principal_id
+}

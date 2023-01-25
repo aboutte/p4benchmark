@@ -77,6 +77,8 @@ export TF_VAR_ingress_cidrs_1666="200.80.77.193"
 terraform apply
 ```
 
+<br>
+
 ## Using existing Helix Core Instance and Virtual Network
 
 To use an existing Helix Core instance and avoid creating a new one, the following variables must be configured, replacing the values with the ones of your instance:
@@ -104,3 +106,17 @@ existing_subnet_name = "public0"
 ```
 
 > **Note:** Since the Locust Client uses the Helix Core private IP to connect to Helix Core, when configuring an existing Helix Core, the existing Virtual Network of the instance should be configured as well.
+
+
+<br>
+
+## Static Benchmark Changeset Setup
+
+In order to use the changeset hosted in Azure Files for the static benchmark, the following variables must be configured in **terraform/azure/variables.tf**:
+
+* `changeset_resource_group_name`
+* `changeset_storage_account_name`
+* `changeset_storage_account_key`
+* `changeset_file_share_name`
+* `changeset_file_share_folder_name`
+* `changeset_destination_path`
